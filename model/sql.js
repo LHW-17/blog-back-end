@@ -1,6 +1,6 @@
 const article = {
   insert:
-    "INSERT INTO article(title, description, content, categoryId, img, stateNum) VALUES(?,?,?,?,?,?)",
+    "INSERT INTO article(title, description, content, categoryId, imgUrl, stateNum) VALUES(?,?,?,?,?,?)",
   update:
     "UPDATE article SET title=?, description=?, content=?, categoryId=?, img=?, stateNum=? WHERE id=?",
   delete: "UPDATE article SET isDeleted=1 WHERE id=?",

@@ -83,9 +83,3 @@
 //     });
 //   },
 // };
-let obj = {
-  a: 123,
-  b: 456,
-};
-let name = "b";
-console.log(obj[name]);

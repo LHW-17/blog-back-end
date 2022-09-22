@@ -5,4 +5,3 @@ const getCategory = function () {
     console.log(res);
   });
 };
-getCategory();

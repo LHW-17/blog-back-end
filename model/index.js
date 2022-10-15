@@ -8,7 +8,7 @@ const db = mysql.createPool(config);
 class Table {
   constructor(name) {
     this.name = name;
-    this.create = async function (params) {
+    this.insert = async function (params) {
       let res = await this.query(sql[name].insert, params);
       return res;
     };
@@ -33,10 +33,12 @@ class Table {
         if (err) {
           reject(new Error("connect failed"));
         }
+        // console.log(Object.values(params));
         connection.query(sql, Object.values(params), (err, result) => {
           if (err) {
             connection.release();
             reject(new Error("query failed"));
+            return;
           }
           res.data = result;
           connection.release();
@@ -50,6 +52,10 @@ class Table {
 }
 //文章操作
 const article = new Table("article");
+article.queryList = async function () {
+  let res = await article.query(sql.article.queryList);
+  return res;
+};
 //分类管理
 const category = new Table("category");
 //评论管理

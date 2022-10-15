@@ -4,6 +4,7 @@ const { expressjwt, UnauthorizedError } = require("express-jwt");
 const jwt = require("jsonwebtoken");
 const bodyParse = require("body-parser");
 const { useArticleRoute } = require("./article.route");
+const { useCategoryRoute } = require("./category.route");
 
 const admin = {
   account: "admin",
@@ -12,7 +13,7 @@ const admin = {
 //使用jwt中间件
 router.use(
   expressjwt({
-    secret: "lhw123456",
+    secret: "lhw17",
     algorithms: ["HS256"],
   }).unless({
     path: [
@@ -26,8 +27,10 @@ router.use(
 );
 //校验token失败时的处理
 router.use((err, req, res, next) => {
+  console.log(err);
   if (err.name === "UnauthorizedError") {
     res.status(401).send("invalid token...");
+    return;
   }
   next();
 });
@@ -39,7 +42,7 @@ router.use(function timeLog(req, res, next) {
 });
 // 后台登录api
 router.post("/login", function (req, res) {
-  console.log(req.body);
+  // console.log(req.body);
   if (
     req.body.account === admin.account &&
     req.body.password === admin.password
@@ -54,16 +57,18 @@ router.post("/login", function (req, res) {
           data: "123456",
         },
         "lhw17",
-        { expiresIn: 60 * 1 } //可使用"1d"的形式表示一天
+        { expiresIn: "1d" } //可使用"1d"的形式表示一天
       ),
     });
+    return;
   } else {
     res.send({
       code: -1,
       message: "account or password error",
     });
+    return;
   }
 });
 useArticleRoute(router);
-
+useCategoryRoute(router);
 module.exports = router;

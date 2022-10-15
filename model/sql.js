@@ -1,18 +1,20 @@
 const article = {
   insert:
-    "INSERT INTO article(title, description, content, categoryId, imgUrl, stateNum) VALUES(?,?,?,?,?,?)",
+    "INSERT INTO article(title, description, categoryId, imgUrl, tag, content, stateNum) VALUES(?,?,?,?,?,?,?)",
   update:
     "UPDATE article SET title=?, description=?, content=?, categoryId=?, img=?, stateNum=? WHERE id=?",
   delete: "UPDATE article SET isDeleted=1 WHERE id=?",
   queryById: "SELECT * FROM article WHERE id=?",
   queryAll: "SELECT * FROM article",
+  queryList:
+    "SELECT article.id, article.title as articleTitle, categoryId, category.title as cTitle, tag, article.createTime, article.updateTime FROM article, category WHERE categoryId=category.id",
 };
 const category = {
-  insert: "INSERT INTO category(title, description) VALUES(?,?)",
-  update: "UPDATE category SET title=?, description=? WHERE id=?",
+  insert: "INSERT INTO category(title) VALUES(?)",
+  update: "UPDATE category SET title=? WHERE id=?",
   delete: "UPDATE category SET isDeleted=1 WHERE id=?",
   queryById: "SELECT * FROM category WHERE id=?",
-  queryAll: "SELECT * FROM category",
+  queryAll: "SELECT * FROM category WHERE isDeleted=0",
 };
 const user = {
   insert:

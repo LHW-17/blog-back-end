@@ -16,10 +16,12 @@ const editArticle = async function (id, data) {
 const deleteById = async function (id) {
   return await article.delete(id);
 };
+const search = async function (option) {};
 module.exports = {
   add: addArticle,
   getList: articleList,
   getById,
   editArticle,
   delete: deleteById,
+  search,
 };

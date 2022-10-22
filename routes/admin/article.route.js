@@ -4,7 +4,7 @@ function useArticleRoute(router) {
   router.post("/addArticle", async function (req, response) {
     const data = req.body;
     const result = {};
-    data.tag = data.tag.join("-");
+    data.tag = JSON.stringify(data.tag);
     // console.log(data);
     //当id存在则调用修改，否则用新增
     if (data.id) {
@@ -43,11 +43,11 @@ function useArticleRoute(router) {
   router.get("/getArticleById", async (req, res) => {
     let result = {};
     try {
-      result = await article.getById(req.query.id);
+      result = await article.getById(+req.query.id);
       result.code = 200;
       res.send(result);
     } catch (error) {
-      res.status(500).send(e.message);
+      res.status(500).send(error.message);
     }
   });
   router.post("/editArticle", async (req, res) => {
@@ -72,6 +72,19 @@ function useArticleRoute(router) {
         code: 500,
         message: error.message,
       });
+    }
+  });
+  //search模块用queryOption数组添加查询条件
+  /*
+   *@queryOption:{key:"",type:"", value:""}
+   */
+  router.post("/searchArticle", async (req, res) => {
+    let option = req.body;
+    console.log(option);
+    try {
+      let result = await article.search(option);
+    } catch (error) {
+      console.log(error);
     }
   });
 }

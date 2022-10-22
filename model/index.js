@@ -19,7 +19,7 @@ class Table {
       return await this.query(sql[name].delete, params);
     };
     this.queryById = async function (params) {
-      return await this.query(sql[name].queryById, params);
+      return await this.query(sql[name].queryById, { params });
     };
     this.queryAll = async function (params) {
       let res = await this.query(sql[name].queryAll, params);
